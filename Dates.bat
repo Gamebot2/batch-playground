@@ -8,3 +8,9 @@ echo %CURRENT_DATE%
 echo %YEAR%
 echo %MONTH%
 echo %DAY%
+
+Rem This part is to mess with date and time environment variables
+
+echo %TIME%
+
+echo/Today is: %year%-%month%-%day%
