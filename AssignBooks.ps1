@@ -17,16 +17,6 @@ foreach ($name in $fileNameArray) {
     #Write-Host $name
 }
 
-<#
-$nameArray = $name -split " "
-$date = $nameArray[0]
-$day = $nameArray[1]
-$title = $nameArray[2] + " " + $nameArray[3] + " " + $nameArray[4] + $nameArray[5]
-$date
-$day
-$title
-#>
-
 #Objective 4: Manipulate one of the file names to obtain a variable that is just "Horizontal Addition 1"
 $initialName = $fileNameArray[0]
 $beforeDash = ($initialName -split "-")[1]
@@ -38,8 +28,101 @@ foreach ($part in $titleArray) {
     $title = $title + $part + " "
 }
 $title = $title.TrimEnd(" ")
-$title
 
-#Objective 5: Create a variable that accesses the online master source
-$source = "C:\Users\$env:UserName\Dropbox\Online Master\Math\Horizontal Addition (Quest)\$title"
-Get-ChildItem -Path $source
+#Objective 5: Create a variable that accesses the online master source and retrieve all files from that folder
+$source = "C:\Users\$env:UserName\Dropbox\Online Master"
+$sourceFolder = Get-ChildItem -Path $source -Filter $title -Recurse -ErrorAction SilentlyContinue -Force | Get-ChildItem -File
+foreach ($file in $sourceFolder) {
+    #Write-Host $file
+}
+
+#Objective 6: Use original file name to extract an integer for the last page in the folder
+$maxEndInt = 0
+foreach($file in $fileNameArray) {
+    $splitTitle = $file -split "-"
+    $startIntString = $splitTitle[$splitTitle.Length-2]
+    $lastElem = $splitTitle[$splitTitle.Length-1]
+    $index = $lastElem.IndexOf(".") - 1
+    $endIntStringArray = $lastElem[0..$index]
+    $endIntString = ""
+    foreach ($portion in $endIntStringArray) {
+        $endIntString = $endIntString + $portion
+    }
+    $startInt = [int]$startIntString
+    $endInt = [int]$endIntString
+    if ($endInt -gt $maxEndInt) {
+        $maxEndInt = $endInt
+    }
+}
+
+
+#Objective 7: Pinpoint the new file based on the last page of the file that's already in the student's folder
+$nextPage = $maxEndInt + 1
+$sourceFile = ""
+foreach($file in $sourceFolder) {
+    $splitTitle = $file -split "-"
+    $startIntString = $splitTitle[1]
+    $startIntString = $startIntString.Trim(" ")
+    if($startIntString -eq [string]$nextPage) {
+        Write-Host $file
+        $sourceFile = $file
+    }
+    
+}
+
+#Objective 8: Figure out how to copy file from source to target
+Get-ChildItem -Path $source -Filter $title -Recurse -ErrorAction SilentlyContinue -Force | % {
+    $sourceFolderPath = $_.FullName
+}
+
+#Objective 9: Create a target file path variable for copying that also includes the day and date appended to the start of the file name
+$fullDate = ($fileNameArray[$fileNameArray.Length-1] -split (" "))[0]
+$month = [int](($fullDate -split ("-"))[0].Trim(" "))
+$day = [int](($fullDate -split ("-"))[1].Trim(" ")) + 1
+
+if($day -eq 29) {
+    if($month -eq 2) {
+        $day = 1
+        $month = 3
+    } 
+}
+if ($day -eq 31) {
+    if(($month -eq 4) -or ($month -eq 6) -or ($month -eq 9) -or ($month -eq 11)) {
+        $day = 1
+        $month = $month + 1
+    } 
+}
+if ($day -eq 32) {
+    if(($month -eq 1) -or ($month -eq 3) -or ($month -eq 5) -or ($month -eq 7) -or ($month -eq 8) -or ($month -eq 10) -or ($month -eq 12)) {
+        $day = 1
+        if($month -eq 12) {
+            $month = 1
+        } else {
+            $month = $month + 1
+        }
+    }
+}
+
+$dayString = Get-Date -Month $month -Day $day -UFormat %a
+if($dayString -eq "Sun") {
+    $day = $day + 1
+    $dayString = "Mon"
+}
+$dateString = Get-Date -Month $month -Day $day -UFormat %e
+$dateString = $dateString.Trim(" ")
+$monthString = Get-Date -Month $month -Day $day -UFormat %m
+$monthValue = [int]$monthString
+if($monthValue -lt 10) {
+    $monthString = $monthString[1..2]
+}
+
+$prefix = ""
+$prefix = $prefix + $monthString + "-" + $dateString + " " + $dayString + " "
+$sourceFilePath = $sourceFolderPath + "\" + $sourceFile
+$finalTarget = $target + "\" + $prefix + $sourceFile
+
+Copy-Item $sourceFilePath -Destination $finalTarget
+
+
+
+
