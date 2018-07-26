@@ -5,11 +5,9 @@ $cnt = (Get-ChildItem -Path $target | Measure-Object).Count
 "The number of files in the folder is " + $cnt
 
 #Objective 2: Check if the number is less than 6 with a conditional
-if($cnt -lt 6) {
+
+while($cnt -lt 6) {
     "There are not enough files in the folder."
-} else {
-    "There are already enough files in the folder: no additions needed."
-}
 
 #Objective 3: Obtain the names of all the files in the folder
 $fileNameArray = (Get-ChildItem -Path $target -Name)
@@ -30,11 +28,29 @@ foreach ($part in $titleArray) {
 $title = $title.TrimEnd(" ")
 
 #Objective 5: Create a variable that accesses the online master source and retrieve all files from that folder
-$source = "C:\Users\$env:UserName\Dropbox\Online Master"
+$source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master"
 $sourceFolder = Get-ChildItem -Path $source -Filter $title -Recurse -ErrorAction SilentlyContinue -Force | Get-ChildItem -File
+$lastPage = 0
 foreach ($file in $sourceFolder) {
-    #Write-Host $file
+    if(($file -like '*TEST*') -or ($file -like '*BOOK*')) {
+        #Write-Host $file
+    } else {
+        #Write-Host $file
+        $splitTitle = $file -split "-"
+        $lastElem = $splitTitle[$splitTitle.Length-1]
+        $index = $lastElem.IndexOf(".") - 1
+        $endIntStringArray = $lastElem[0..$index]
+        $endIntString = ""
+        foreach ($portion in $endIntStringArray) {
+            $endIntString = $endIntString + $portion
+        }
+        $endInt = [int]$endIntString
+        if ($endInt -gt $lastPage) {
+            $lastPage = $endInt
+        }
+    }
 }
+$lastPage
 
 #Objective 6: Use original file name to extract an integer for the last page in the folder
 $maxEndInt = 0
@@ -63,17 +79,26 @@ foreach($file in $sourceFolder) {
     $splitTitle = $file -split "-"
     $startIntString = $splitTitle[1]
     $startIntString = $startIntString.Trim(" ")
-    if($startIntString -eq [string]$nextPage) {
-        Write-Host $file
-        $sourceFile = $file
+    if($maxEndInt -eq $lastPage) {
+        if($file -like '*TEST*') {
+            Write-Host $file
+            $sourceFile = $file
+            break
+        }
+    } else {
+        if($startIntString -eq [string]$nextPage) {
+            Write-Host $file
+            $sourceFile = $file
+            break
+        }
     }
-    
 }
 
 #Objective 8: Figure out how to copy file from source to target
 Get-ChildItem -Path $source -Filter $title -Recurse -ErrorAction SilentlyContinue -Force | % {
     $sourceFolderPath = $_.FullName
 }
+
 
 #Objective 9: Create a target file path variable for copying that also includes the day and date appended to the start of the file name
 $fullDate = ($fileNameArray[$fileNameArray.Length-1] -split (" "))[0]
@@ -118,11 +143,14 @@ if($monthValue -lt 10) {
 
 $prefix = ""
 $prefix = $prefix + $monthString + "-" + $dateString + " " + $dayString + " "
-$sourceFilePath = $sourceFolderPath + "\" + $sourceFile
+$sourceFilePath = $sourceFile.FullName
 $finalTarget = $target + "\" + $prefix + $sourceFile
+
 
 Copy-Item $sourceFilePath -Destination $finalTarget
 
-
+$cnt = $cnt + 1
+$cnt
+} 
 
 
