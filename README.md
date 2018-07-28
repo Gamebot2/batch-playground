@@ -3,7 +3,7 @@
 This repository has two purposes. The first is to allow me to simply practice scripting in Batch and Windows PowerShell, both concepts that are new to me. The second is for the overall goal of attempting to automatically assign homework to Quest Learning online students. Students receive homework through the transfer and renaming of PDF files, so these scripts are designed to facilitate that process by automatically selecting the next book, renaming it with the appropriate day and date, and moving the item to the student's folder, with only the items that are already in there as input. 
 
 <p align="center">
-	<img src="ide.png" alt="Image of code running" />
+	<img src="ide.PNG" alt="Image of code running" />
 </p>
 
 ## Built With
