@@ -7,7 +7,7 @@ $cnt = (Get-ChildItem -Path $target | Measure-Object).Count
 #Objective 2: Check if the number is less than 6 with a conditional
 
 while($cnt -lt 6) {
-    "There are not enough files in the folder."
+    #"There are not enough files in the folder."
 
 #Objective 3: Obtain the names of all the files in the folder
 $fileNameArray = (Get-ChildItem -Path $target -Name)
@@ -50,7 +50,7 @@ foreach ($file in $sourceFolder) {
         }
     }
 }
-$lastPage
+#$lastPage
 
 #Objective 6: Use original file name to extract an integer for the last page in the folder
 $maxEndInt = 0
@@ -150,7 +150,7 @@ $finalTarget = $target + "\" + $prefix + $sourceFile
 Copy-Item $sourceFilePath -Destination $finalTarget
 
 $cnt = $cnt + 1
-$cnt
+#$cnt
 } 
 
 
