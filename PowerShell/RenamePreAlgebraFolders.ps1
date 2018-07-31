@@ -1,4 +1,9 @@
-﻿$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Pre-Algebra"
+﻿#----------------------------------------------------------------------------------------------------------
+#RenamePreAlgebraFolders.ps1
+#Goal of this script is to rename all Pre Algebra folders so they match the titles of the books, i.e. 
+#the part of the book title that precedes the hyphen.
+#----------------------------------------------------------------------------------------------------------
+$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Pre-Algebra"
 $cnt = 4
 while($cnt -lt 28) {
     $source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Pre-Algebra\Pre Algebra " + $cnt

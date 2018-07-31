@@ -1,4 +1,8 @@
-﻿$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
+﻿#----------------------------------------------------------------------------------------------------------
+#RenameAlgebraFolders3.ps1
+#Goal of this script is to remove periods from the middle of Algebra book files for a cleaner look
+#----------------------------------------------------------------------------------------------------------
+$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
 $cnt = 1
 while($cnt -lt 32) {
     $source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I\Algebra " + $cnt

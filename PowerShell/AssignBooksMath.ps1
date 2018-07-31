@@ -1,4 +1,10 @@
-﻿$env:UserName
+﻿#----------------------------------------------------------------------------------------------------------
+#AssignBooksMath.ps1
+#The goal of this massive script is to automatically assign students appropriate math books simply by gleaning
+#information from the books that are already in their folder. The script is intended to make it easier for 
+#instructors to assign books by automatically copying, pasting, and renaming appropriate files
+#----------------------------------------------------------------------------------------------------------
+$env:UserName
 $target = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Ansh Jain\MATH"
 #Objective 1: Count the number of files in the specified target directory
 $cnt = (Get-ChildItem -Path $target | Measure-Object).Count
@@ -26,7 +32,7 @@ foreach ($part in $titleArray) {
     $title = $title + $part + " "
 }
 $title = $title.TrimEnd(" ")
-
+$title
 #Objective 5: Create a variable that accesses the online master source and retrieve all files from that folder
 $source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master"
 $sourceFolder = Get-ChildItem -Path $source -Filter $title -Recurse -ErrorAction SilentlyContinue -Force | Get-ChildItem -File
@@ -44,7 +50,7 @@ foreach ($file in $sourceFolder) {
         foreach ($portion in $endIntStringArray) {
             $endIntString = $endIntString + $portion
         }
-        $endInt = [int]$endIntString
+        #$endInt = [int]$endIntString
         if ($endInt -gt $lastPage) {
             $lastPage = $endInt
         }
