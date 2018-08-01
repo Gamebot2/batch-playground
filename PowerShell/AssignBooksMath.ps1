@@ -50,13 +50,13 @@ foreach ($file in $sourceFolder) {
         foreach ($portion in $endIntStringArray) {
             $endIntString = $endIntString + $portion
         }
-        #$endInt = [int]$endIntString
+        $endInt = [int]$endIntString
         if ($endInt -gt $lastPage) {
             $lastPage = $endInt
         }
     }
 }
-#$lastPage
+
 
 #Objective 6: Use original file name to extract an integer for the last page in the folder
 $maxEndInt = 0
@@ -76,7 +76,6 @@ foreach($file in $fileNameArray) {
         $maxEndInt = $endInt
     }
 }
-
 
 #Objective 7: Pinpoint the new file based on the last page of the file that's already in the student's folder
 $nextPage = $maxEndInt + 1
