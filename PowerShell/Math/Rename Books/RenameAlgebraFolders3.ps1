@@ -2,10 +2,10 @@
 #RenameAlgebraFolders3.ps1
 #Goal of this script is to remove periods from the middle of Algebra book files for a cleaner look
 #----------------------------------------------------------------------------------------------------------
-$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
+$folderSource = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
 $cnt = 1
 while($cnt -lt 32) {
-    $source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I\Algebra " + $cnt
+    $source = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I\Algebra " + $cnt
     $sourceFiles = Get-ChildItem -Path $source -Recurse -ErrorAction SilentlyContinue -Force | Get-ChildItem -File
     foreach($file in $sourceFiles) {
         $initialPath = $file.FullName

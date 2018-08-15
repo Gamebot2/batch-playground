@@ -2,7 +2,7 @@
 #RenamePreAlgebra.ps1
 #Goal of this script is to rename Pre Algebra book files by placing the hyphen in the correct place for parsing
 #----------------------------------------------------------------------------------------------------------
-$source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Pre-Algebra\Pre Algebra 27"
+$source = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Online Master\Math\Pre-Algebra\Pre Algebra 27"
 $sourceFiles = Get-ChildItem -Path $source -Recurse -ErrorAction SilentlyContinue -Force | Get-ChildItem -File
 foreach($file in $sourceFiles) {
     if(!($file -like '*TEST*') -and !($file -like '*BOOK*') -and !($file -like '*Notes*') -and !($file -like '*class*')) {

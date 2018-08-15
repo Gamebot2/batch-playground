@@ -4,10 +4,10 @@
 #such as "Algebra 31". Secondary purpose is to remove the "Book" from the name so the renaming file does 
 #not get it confused with the BOOK files.
 #----------------------------------------------------------------------------------------------------------
-$folderSource = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
+$folderSource = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I"
 $cnt = 1
 while($cnt -lt 32) {
-    $source = "C:\Users\QLOWORKSTATION5\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I\Algebra 1 booklet " + $cnt
+    $source = "C:\Users\$env:UserName\Mr. Ansh\PowerShell and Batch\Online Master\Math\Algebra I\Algebra 1 booklet " + $cnt
     $splitName = $source -split " "
     $newNum = $splitName[$splitName.Length-1]
     $newName = "Algebra " + $newNum
