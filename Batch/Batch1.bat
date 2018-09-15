@@ -51,6 +51,7 @@ if defined array[%x%] (
 	set /a "x+=1"
 	GOTO :SymLoop
 )
+
 echo The length of the array is %x%
 
 ::How to create structures within Arrays
